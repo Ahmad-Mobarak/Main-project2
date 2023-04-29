@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Main_project2
@@ -43,7 +36,7 @@ namespace Main_project2
         private void button6_Click(object sender, EventArgs e)
         {
             conn.Open();
-            int id = Int32.Parse(textBox1.Text.ToString()); 
+            int id = Int32.Parse(textBox1.Text.ToString());
             float grade = float.Parse(textBox4.Text.ToString());
             string name = textBox3.Text.ToString();
             string password = textBox2.Text.ToString();
@@ -69,7 +62,7 @@ namespace Main_project2
             string password = textBox2.Text.ToString();
             string faculity = textBox6.Text.ToString();
             string couces = textBox5.Text.ToString();
-            SqlCommand sq = new SqlCommand("update loginstd set password = '" + password + "', name = '" + name + "',faculity ='" + faculity + "',enrolled_cources ='" + couces + "',grade =" + grade + " where id = "+id+"", conn);
+            SqlCommand sq = new SqlCommand("update loginstd set password = '" + password + "', name = '" + name + "',faculity ='" + faculity + "',enrolled_cources ='" + couces + "',grade =" + grade + " where id = " + id + "", conn);
             sq.ExecuteNonQuery();
             conn.Close();
             textBox1.Clear();

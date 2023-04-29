@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace Main_project2
 {
@@ -23,25 +15,36 @@ namespace Main_project2
 
         private void button5_Click(object sender, EventArgs e)
         {
-            conn.Open();
-            SqlCommand cmd = new SqlCommand("Select * from loginstd where id =" + textBox1.Text + " and password  = '" + textBox2.Text+"'" , conn);
-            SqlDataReader rdr = cmd.ExecuteReader();
-            while (rdr.Read())
+            SqlDataAdapter dau = new SqlDataAdapter("SELECT count(*) FROM loginstd WHERE id = '" + textBox1.Text + "' AND password ='" + textBox2.Text + "'", conn);
+            DataTable dtu = new DataTable();
+            dau.Fill(dtu);
+            if (dtu.Rows[0][0].ToString() == "1")
             {
-                textBox2.Text = rdr.GetValue(1).ToString();
-                textBox3.Text = rdr.GetValue(2).ToString();
-                textBox6.Text = rdr.GetValue(3).ToString();
-                textBox5.Text = rdr.GetValue(4).ToString();
-                textBox4.Text = rdr.GetValue(5).ToString();
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("Select * from loginstd ", conn);
+                SqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    textBox2.Text = rdr.GetValue(1).ToString();
+                    textBox3.Text = rdr.GetValue(2).ToString();
+                    textBox6.Text = rdr.GetValue(3).ToString();
+                    textBox5.Text = rdr.GetValue(4).ToString();
+                    textBox4.Text = rdr.GetValue(5).ToString();
+                }
+                conn.Close();
             }
-            conn.Close();
+            else
+            {
+                MessageBox.Show("Check ID and password");
+            }
+
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             conn.Open();
             string password = textBox2.Text.ToString();
-            SqlCommand sq = new SqlCommand("update loginstd set password = '" +password+"'", conn);
+            SqlCommand sq = new SqlCommand("update loginstd set password = '" + password + "' where id = " + textBox1.Text + "", conn);
             sq.ExecuteNonQuery();
             conn.Close();
         }
