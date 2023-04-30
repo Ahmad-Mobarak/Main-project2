@@ -21,7 +21,7 @@ namespace Main_project2
             if (dtu.Rows[0][0].ToString() == "1")
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("Select * from loginstd ", conn);
+                SqlCommand cmd = new SqlCommand("Select * from loginstd where id =" + textBox1.Text + " ", conn);
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
